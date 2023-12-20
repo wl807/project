@@ -33,33 +33,7 @@
   <!-- Header-->
   <header class="bg-dark py-5">
     <!-- carousel-->
-    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" data-interval="1000">
-      <!-- 하단의 indicators-->
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="2" aria-label="Slide 3"></button>
-      </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="{% static "img/carousel0.jpeg" %}" class="d-block w-100 " alt="...">
-        </div>
-        <div class="carousel-item">
-          <img src="{% static "img/carousel1.jpg" %}" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-          <img src="{% static "img/carousel2.png" %}" class="d-block w-100" alt="...">
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
+    {% include "blog/carousel.html" %}
   </header>
 {% endblock header %}
 
@@ -82,7 +56,7 @@
         {% for item in items %}
           <div class="col-lg-4 mb-5">
             <div class="card h-100 shadow border-0">
-              <img class="card-img-top" src="https://dummyimage.com/600x350/ced4da/6c757d" alt="..."/>
+              <img class="card-img-top img-fluid" style="height: 200px;" src="{{item.image.url}}" alt="..."/>
               <div class="card-body p-4">
                 <div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>
                 <a class="text-decoration-none link-dark stretched-link" href="#!">
