@@ -1,0 +1,10 @@
+venv/
+
+# git add -f 원하는 파일.확장자 로 강제 추가시킬 수 있다
+__pycache__
+__init__.py
+asgi.py
+wsgi.py
+# !/pystagram/config/urls
+
+*.sqlite3
