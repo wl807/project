@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # media 설정
 MEDIA_ROOT = Path(BASE_DIR, "media")
 MEDIA_URL = "/media/"
+
+# 새로작성한 User 인증 모델로 사용할 것을 알려줘야 함
+AUTH_USER_MODEL = "accounts.User"
+
+# 로그인 이후 가야할 곳 지정
+LOGIN_REDIRECT_URL = "/"
+
+# 로그아웃 이후 가야할 곳 지정
+LOGOUT_REDIRECT_URL = "/"

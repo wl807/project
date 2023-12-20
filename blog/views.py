@@ -1,6 +1,10 @@
 from django.shortcuts import render
-
+from .models import Item
 # Create your views here.
 def index(request):
-    # return render(request, 'blog/index.html')
-    return render(request, 'blog/index.html')
+    items= Item.objects.all()
+    context = {
+        "items" : items
+    }
+
+    return render(request, 'blog/index.html', context)

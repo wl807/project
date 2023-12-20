@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="row">
+    <h3>로그인</h3>
+  </div>
+  <form action="" method="post">
+    {% comment %} {{form.as_p}} {% endcomment %}
+    {% csrf_token %}
+    {% include "errors.html" %}
+    {% for field in form %}
+      <div class="form-group mb-2">
+        <label for="{{field.id_for_label}}">{{field.label}}</label>
+        <input type="{{field.widget_type}}" class="form-control" id="{{field.id_for_label}}" name="{{field.name}}" placeholder="{{field.label}}" value="{{field.value|default_if_none:''}}">
+        <span class="help-text">{{field.help_text}}</span>
+      </div>
+    {% endfor %}
+    <div class="form-group mb-2">
+      <button type="submit" class="btn btn-primary">로그인</button>
+    </div>
+  </form>
+{% endblock content %}
