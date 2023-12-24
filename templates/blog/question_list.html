@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% comment %} {% load static board_filter %} {% endcomment %}
+{% block content %}
+  <div class="container my-3">
+    <h2>Question List</h2>
+    <div class="row my-3">
+      <div class="input-group">
+        <input type="text" name="keyword" id="" class="form-control">
+        <button type="button" class="btn btn-outline-secondary" id="btn-search">찾기</button>
+      </div>
+    </div>
+    <table class="table">
+      <thead>
+        <tr class="thead-dark">
+          <th>번호</th>
+
+          <th style="width:50%">제목</th>
+          <th>작성자</th>
+          <th>작성일시</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 게시물 일련번호 = 전체게시물개수 - 시작 인덱스 - 현재인덱스(0~9) + 1 -->
+        <!-- paginator.count : 전체 게시물 개수 -->
+        <!-- start_index : 현재 페이지 시작 인덱스(1부터 시작) -->
+        <!-- forloop.counter0 : for 루프 돌릴 때 인덱스는 0부터 시작 -->
+        <!-- sub:커스텀 필터 호출, add:장고 필터 호출 -->
+        {% for question in question_list %}
+          <tr class="text-center">
+            <td>{{question.id}}</td>
+           
+            <td>
+              <a href="{% url "blog:question_detail" question.id %}" class="text-decoration-none text-reset">{{question.subject}}
+                
+            </td>
+            <td>{{question.author}}</td>
+            <td>{{question.created_at}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% comment %} <!-- 페이징 처리 paginator.page_range : 페이지 범위 -->
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        {% if question_list.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="{{question_list.previous_page_number}}" aria-label="Previous">
+              previous
+            </a>
+          </li>
+        {% endif %}
+        {% for page in question_list.paginator.page_range %}
+          {% if page >= question_list.number|add:-5 and page <= question_list.number|add:5%}
+            <li class="page-item {% if page == question_list.number %}active{% endif %}">
+              <a class="page-link" href="{{page}}">{{page}}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+        {% if question_list.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="{{question_list.next_page_number}}" aria-label="Next">
+              next
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav> {% endcomment %}
+
+    <a href="{% url "blog:question_register" %}" class="btn btn-primary">질문 등록</a>
+  </div>
+{% endblock content %}
+{% comment %} {% block script %}
+  <script src="{% static "js/list.js" %}"></script>
+{% endblock script %} {% endcomment %}

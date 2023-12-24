@@ -12,12 +12,9 @@ urlpatterns = [
         auth_views.LoginView.as_view(template_name="accounts/login.html"),
         name="login",
     ),
-    path(
-        # http://127.0.0.1:8000/accounts/login/
-        "logout/",
-        auth_views.LogoutView.as_view(),
-        name="logout",
-    ),
-        #   path("logout/", views.custom_logout, name="logout"),
-    # path("join/", register, name="join"),
+        # http://127.0.0.1:8000/accounts/logout/
+    # custom logout : post 형식만 가능..
+    path("logout/", views.custom_logout, name="logout"),
+        # http://127.0.0.1:8000/accounts/join/
+    path("join/", views.register, name="join"),
 ]

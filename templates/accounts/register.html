@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="row">
+    <h3>회원가입</h3>
+  </div>
+  <form action="" method="post">
+    {% comment %} {{form.as_p}} {% endcomment %}
+    {% csrf_token %}
+    {% include "errors.html" %}
+    {% for field in form %}
+        <div class="form-group mb-3">
+            <label for="{{field.id_for_label}}">{{field.label}}</label>
+            {% if field.name == "gender" %}
+              <select name="{{field.name}}" id="{{field.id_for_label}}" class="form-control">
+                {% for option in field %}
+                  {{option}}
+                {% endfor %}
+              </select>
+            {% else %}            
+              <input type="{{field.widget_type}}" class="form-control" id="{{field.id_for_label}}" name="{{field.name}}" placeholder="{{field.label}}" value="{{field.value|default_if_none:''}}">
+            {% endif %}
+            <span class="help-text">{{field.help_text}}</span>
+        </div>
+    {% endfor %}
+    <div class="form-group mb-3">
+        <button type="submit" class="btn btn-primary">회원가입</button>
+    </div>
+  </form>
+{% endblock content %}

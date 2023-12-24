@@ -1,0 +1,47 @@
+/* 768px 이상일 때   */
+@media (min-width: 769px) {
+  .col-4 {
+    float: right;
+    display: block;
+    /* 769px 이상에서는 col-4 영역을 보이게 함 */
+  }
+
+  .icon-container {
+    display: none;
+    /* 769px 이상에서는 아이콘 영역을 숨김 */
+  }
+}
+
+/* 770px 이하일 때 */
+@media (max-width: 770px) {
+  .col-4 {
+    display: none;
+    /* 770px 이하에서 col-4 영역을 숨김 */
+  }
+
+  .icon-container {
+    /* float: right; */
+    display: block;
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    border: none;
+    border-radius: 16px;
+    background: royalblue;
+    color: white;
+    padding: 12px;
+    font-weight: bold;
+    box-shadow: 0 5px 15px gray;
+    cursor: pointer;
+    width: 100px;
+  }
+
+  .col-8 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .comment-section {
+    display: none;
+  }
+}

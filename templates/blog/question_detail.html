@@ -1,0 +1,285 @@
+{% extends "base.html" %}
+{% load static %}
+{% block style %}
+  <link rel="stylesheet" href="{% static "css/question_detail.css" %}">
+
+{% endblock style %}
+{% block content %}
+
+  <div class="row p-3 flex-shrink-0">
+
+    <!-- question detail-->
+    <div class="col-8 flex-shrink-0">
+      <section class="py-2">
+        <div class="container px-5 my-2">
+          <div class="row gx-5">
+            <div class="col-lg-12">
+              <!-- Question content-->
+              <article>
+                <!-- Post header-->
+                <header class="mb-4">
+                  <!-- Post title-->
+                  <h1 class="fw-bolder mb-1">{{question.subject}}</h1>
+                  <!-- Post meta content-->
+                  <div class="text-muted fst-italic mb-2">
+                    {{question.created_at}}
+                  </div>
+                  <!-- Post categories-->
+                  <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
+                  <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
+                </header>
+                <!-- Preview image figure-->
+
+                {% if question.image%}
+                  <figure class="mb-4"><img class="img-fluid rounded" src="{{question.image.url}}" alt="..."/></figure>
+                {% endif %}
+                <!-- Post content-->
+                <section class="mb-5">
+                  <p>{{question.content}}</p>
+                </section>
+              </article>
+
+              <!-- Answer section-->
+              <section>
+                <div class="card">
+                  <div class="card-body bg-light">
+                    <!-- Answer form-->
+                    {% include "errors.html" %}
+                    <form action="{% url "blog:answer_create" question.id %}" method="post" class="mb-4">
+                      {% csrf_token %}
+                      <div class="form-group mb-3">
+                        <textarea class="form-control" name="content" id="content" rows="3" placeholder="질문에 대한 댓글을 남겨보세요!"></textarea>
+                      </div>
+                      <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">답변 등록</button>
+                      </div>
+                    </form>
+                    <!-- 답변 등록 끝-->
+
+                    <!-- comment 영역 -->
+                    {% for answer in question.answer_set.all %}
+                      <div class="d-flex mb-4">
+                        <!-- Parent comment-->
+                        <div class="flex-shrink-0">
+                          <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." style="filter: invert(0)"/>
+                        </div>
+
+                        <div class="ms-3">
+                          <div class="fw-bold">{{answer.author.name}}</div>
+                          {{answer.content}}
+                          <div class="d-flex justify-content-between">
+                            <div class="text-muted">
+                              <a href="" class="text-muted small text-decoration-none text-reset dropdown-toggle more-answer-comment">답변의 댓글</a>
+                            </div>
+                            <div class="text-muted">
+                              <a href="" class="text-muted small text-decoration-none text-reset">수정</a>
+                              <a href="" class="text-muted small text-decoration-none text-reset">삭제</a>
+                            </div>
+                          </div>
+
+                          <!-- comment 영역 -->
+                          {% if answer.comment_set.count > 0%}
+                            {% for comment in answer.comment_set.all%}
+                              <div id="" class="comment-section" style="display:none">
+                                <div class="d-flex mt-4">
+                                  <div class="flex-shrink-0">
+                                    <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." style="filter: invert(0)"/>
+                                  </div>
+                                  <div class="ms-3">
+                                    <div class="fw-bold">{{comment.author.name}}</div>
+                                    {{comment.content}}
+                                  </div>
+                                </div>
+
+                                <!-- Comment 폼 디자인 -->
+                                <div class="d-flex justify-content-center p-3">
+                                  <div class="d-flex flex-grow-1">
+                                    <form action="" method="post" class="mb-4">
+                                      <input type="hidden" name="csrfmiddlewaretoken" value="fF3Ep1KM1ZDuMGL7idBzwMWOeflVNVfwblUvfNR9kALVgEldkfF0yGTxmnH7JDrK"/>
+                                      <div class="col-12 flex-grow-1 w-100">
+                                        <textarea class="form-control" name="content" rows="2" placeholder="" style="width: 100%"></textarea>
+                                      </div>
+
+                                      <button type="submit" class="btn border align-items-center d-flex p-2">
+                                        <span>확인</span>
+                                      </button>
+                                    </form>
+                                  </div>
+                                </div>
+                                <!-- // Comment 폼 디자인 -->
+                              </div>
+                            {% endfor %}
+                          {% else %}
+                            <div id="" class="comment-section" style="display:none">
+                              <div class="d-flex justify-content-center p-3">
+                                <div class="d-flex flex-grow-1">
+                                  <form action="" method="post" class="mb-4">
+                                    <input type="hidden" name="csrfmiddlewaretoken" value="fF3Ep1KM1ZDuMGL7idBzwMWOeflVNVfwblUvfNR9kALVgEldkfF0yGTxmnH7JDrK"/>
+                                    <div class="col-12 flex-grow-1 w-100">
+                                      <textarea class="form-control" name="content" rows="2" placeholder="" style="width: 100%"></textarea>
+                                    </div>
+
+                                    <button type="submit" class="btn border align-items-center d-flex p-2">
+                                      <span>확인</span>
+                                    </button>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          {% endif %}
+                        </div>
+                      </div>
+                    {% endfor %}
+
+                    <!-- comment 영역 종료-->
+                  </div>
+                  <!--card body 종료-->
+                </div>
+                <!--card 종료-->
+
+              </div>
+            </div>
+          </div>
+
+          <!-- 댓글 하나 종료료-->
+        </section>
+      </div>
+
+      <div class="col-4">
+        <div class="container p-0 py-5">
+          <h2 class="fw-bolder mb-3">Website Issues</h2>
+          <div class="accordion mb-3" id="accordionExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  전체 세일 기간은 언제인가요?
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <strong>This is the first item's accordion body.</strong>
+                  It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the
+                  <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  판매자와 연락이 안돼요!
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <strong>This is the second item's accordion body.</strong>
+                  It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the
+                  <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  사기 거래 처벌 규정
+                </button>
+              </h2>
+              <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <strong>This is the third item's accordion body.</strong>
+                  It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the
+                  <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- second accordion-->
+          <!-- FAQ Accordion 2-->
+          <h2 class="fw-bolder mb-3">Website Issues</h2>
+          <div class="accordion mb-5 mb-xl-0" id="accordionExample2">
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne2" aria-expanded="false" aria-controls="collapseOne2">
+                  Accordion Item #1
+                </button>
+              </h3>
+              <div class="accordion-collapse collapse" id="collapseOne2" aria-labelledby="headingOne" data-bs-parent="#accordionExample2">
+                <div class="accordion-body">
+                  <strong>This is the first item's accordion body.</strong>
+                  It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the
+                  <code>.accordion-body</code>
+                  , though the transition does limit overflow.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo2" aria-expanded="false" aria-controls="collapseTwo2">
+                  Accordion Item #2
+                </button>
+              </h3>
+              <div class="accordion-collapse collapse" id="collapseTwo2" aria-labelledby="headingTwo" data-bs-parent="#accordionExample2">
+                <div class="accordion-body">
+                  <strong>This is the second item's accordion body.</strong>
+                  It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the
+                  <code>.accordion-body</code>
+                  , though the transition does limit overflow.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree2" aria-expanded="false" aria-controls="collapseThree2">
+                  Accordion Item #3
+                </button>
+              </h3>
+              <div class="accordion-collapse collapse" id="collapseThree2" aria-labelledby="headingThree" data-bs-parent="#accordionExample2">
+                <div class="accordion-body">
+                  <strong>This is the third item's accordion body.</strong>
+                  It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the
+                  <code>.accordion-body</code>
+                  , though the transition does limit overflow.
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- accordion finish-->
+          <!-- more help -->
+          <div class="card border-0 bg-light mt-xl-5 mb-3">
+            <div class="card-body p-4 py-lg-5">
+              <div class="d-flex align-items-center justify-content-center">
+                <div class="text-center">
+                  <div class="h6 fw-bolder">Have more questions?</div>
+                  <p class="text-muted mb-4">
+                    Contact us at
+                    <br/>
+                    <a href="#!">support@domain.com</a>
+                  </p>
+                  <div class="h6 fw-bolder">Follow us</div>
+                  <a class="fs-5 px-2 link-dark" href="#!">
+                    <i class="bi-twitter"></i>
+                  </a>
+                  <a class="fs-5 px-2 link-dark" href="#!">
+                    <i class="bi-facebook"></i>
+                  </a>
+                  <a class="fs-5 px-2 link-dark" href="#!">
+                    <i class="bi-linkedin"></i>
+                  </a>
+                  <a class="fs-5 px-2 link-dark" href="#!">
+                    <i class="bi-youtube"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="icon-container">
+        아이콘!!!
+      </div>
+
+    </div>
+  {% endblock content %}
+  {% block script %}
+    <script src="{% static "js/detail.js" %}"></script>
+  {% endblock script %}
