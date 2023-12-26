@@ -13,16 +13,7 @@ def index(request):
 
     return render(request, 'blog/index.html', context)
 
-def item_detail(request, id):
-    item = get_object_or_404(Item, id=id)
-    context={
-        "item":item
-    }
-    return render(
-        request, "blog/item_detail.html", context
-    )
-
-
+# item
 @login_required
 def item_register(request):
     """
@@ -45,6 +36,16 @@ def item_register(request):
         form = ItemForm()
 
     return render(request, "blog/item_register.html", {"form": form})
+
+
+def item_detail(request, id):
+    item = get_object_or_404(Item, id=id)
+    context={
+        "item":item
+    }
+    return render(
+        request, "blog/item_detail.html", context
+    )
 
 
 @login_required
@@ -72,10 +73,8 @@ def item_delete(request, pk):
     return redirect("blog:index")
 
 
-
-
-
-
+def faq(request):
+    return render(request, "blog/faq.html")
 
 def qna(request):
     """
@@ -94,21 +93,16 @@ def qna(request):
     return render(request, "blog/question_list.html", context)
 
 
-def question_detail(request, qid):
-    """
-    Question 상세 조회
-    """
-    question = get_object_or_404(Question, id=qid)
-    return render(request, "blog/question_detail.html", {"question": question})
 
 
+# Question
 @login_required
 def question_register(request):
     """
     질문등록 - form 사용
     """
     if request.method == "POST":
-        form = QuestionForm(request.POST)
+        form = QuestionForm(request.POST, request.FILES)
         if form.is_valid():
             question = form.save(commit=False)
             question.author = request.user
@@ -119,6 +113,42 @@ def question_register(request):
     return render(request, "blog/question_register.html", {"form": form})
 
 
+def question_detail(request, qid):
+    """
+    Question 상세 조회
+    """
+    question = get_object_or_404(Question, id=qid)
+    return render(request, "blog/question_detail.html", {"question": question})
+
+@login_required
+def question_modify(request,qid):
+    """
+    질문 수정 - form 사용
+    """
+    question = get_object_or_404(Question, id=qid ) # 수정할 대상 찾기
+    if request.method == "POST":
+        form = QuestionForm(request.POST, request.FILES, instance=question) # instance= 찾은 대상 적어주기. 안쓰면 create 되어버림
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.modified_at = timezone.now()
+            question.save()
+            return redirect("blog:question_detail", question.id)
+    else:
+        form = QuestionForm(instance=question)
+    return render(request, "blog/question_modify.html", {"form":form})
+
+
+@login_required
+def question_delete(request, qid):
+    question = get_object_or_404(Question, id=qid)
+    question.delete()
+    return redirect("blog:qna")
+
+
+
+
+
+# Answer
 @login_required
 def answer_create(request, qid):
     '''
@@ -144,7 +174,36 @@ def answer_create(request, qid):
 
     return render(request, "blog/question_detail.html", context)
 
+@login_required
+def answer_modify(request,aid):
+    """
+    질문 수정 - form 사용
+    """
+    answer = get_object_or_404(Answer, id=aid ) # 수정할 대상 찾기
+    if request.method == "POST":
+        form = AnswerForm(request.POST, request.FILES, instance=answer) # instance= 찾은 대상 적어주기. 안쓰면 create 되어버림
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.modified_at = timezone.now()
+            answer.save()
+            return redirect("blog:question_detail", answer.question.id)
+    else:
+        form = AnswerForm(instance=answer)
+    return render(request, "blog/answer_modify.html", {"form":form})
 
+@login_required
+def answer_delete(request, aid):
+    answer = get_object_or_404(Answer, id=aid)
+    answer.delete()
+    return redirect("blog:question_detail" ,answer.question.id)
+
+
+
+
+
+
+
+# Comment
 @login_required
 def comment_create_answer(request, aid):
     '''
@@ -163,7 +222,7 @@ def comment_create_answer(request, aid):
             comment.author = request.user
             comment.answer = answer
             comment.save()
-            return redirect("blog:question_detail", answer.id)
+            return redirect("blog:question_detail", answer.question.id)
             # return redirect( "{}#comment_{}".format(
             #         resolve_url("blog:question_detail", answer.id),
             #         comment.id,
@@ -175,8 +234,31 @@ def comment_create_answer(request, aid):
 
     return render(request, "blog/question_detail.html", context)
 
+@login_required
+def comment_modify_answer(request, cid):
+    comment = get_object_or_404(Comment, id=cid)
+    if request.method == "POST":
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.modified_at = timezone.now()
+            comment.save()
+            return redirect("blog:question_detail", comment.answer.question.id)
+            # return redirect(
+            #     "{}#comment_{}".format(
+            #         resolve_url("board:question_detail", comment.answer.question.id),
+            #         comment.id,
+            #     )
+            # )
+    else:
+        form = CommentForm(instance=comment)
+    return render(request, "blog/comment_form.html", {"form": form})
 
-
+@login_required
+def comment_delete_answer(request, cid):
+    comment = get_object_or_404(Comment, id=cid)
+    comment.delete()
+    return redirect("blog:question_detail" ,comment.answer.question.id)
 
 
 

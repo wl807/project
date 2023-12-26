@@ -1,0 +1,79 @@
+.carousel-item {
+  text-align: center;
+  transition: transform 1.3s ease-in-out;
+}
+
+.owl-item img {
+  max-height: 80%;
+  height: 400px;
+  width: auto;
+  /* 가로 길이를 자동으로 조절 */
+  max-width: 80%;
+  /* 최대 가로 길이를 설정 */
+  margin: 0 auto;
+  /* 가운데 정렬을 위한 마진 설정 */
+
+  @media (max-width: 768px) {
+    height: 300px;
+    /* 화면 폭이 768px 이하일 때 높이를 줄임 */
+  }
+}
+
+#myAside {
+  background-color: #ffdddd;
+}
+
+#Fixed {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 70px;
+  height: 70px;
+  border: none;
+  border-radius: 16px;
+  background-color: #ffdddd;
+  color: black;
+  padding: 12px;
+  font-weight: bold;
+  box-shadow: 0 5px 15px gray;
+  cursor: pointer;
+}
+
+#Fixed_img {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 70px;
+  height: 70px;
+}
+
+/* @media (max-width: 770px) {
+  .owlBtn {
+    display: none;
+  }
+} */
+
+.owl-prev {
+  width: 15px;
+  height: 100px;
+  position: absolute;
+  top: 40%;
+  margin-left: -20px;
+  display: block !important;
+  border: 0px solid black;
+}
+
+.owl-next {
+  width: 15px;
+  height: 100px;
+  position: absolute;
+  top: 40%;
+  right: 3px;
+  display: block !important;
+  border: 0px solid black;
+}
+.owl-prev i,
+.owl-next i {
+  transform: scale(1, 6);
+  color: #ccc;
+}

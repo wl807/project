@@ -22,6 +22,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin">
     <link href="https://fonts.googleapis.com/css2?family=Grandiflora+One&family=Lumanosimo&display=swap" rel="stylesheet">
+
+    <!-- owl carousel -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     <style>
       #mylogo {
         font-family: 'Grandiflora One', cursive;
@@ -80,7 +84,7 @@
               
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  My Page</a>
+                  <i class="fa-regular fa-user"></i> <span class="small">{{request.user.name}}님</span><br> My Page</a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
                   <li>
                     <a class="dropdown-item" href="blog-home.html">
@@ -134,6 +138,9 @@
       <!-- Core theme JS-->
       <script src="{% static "js/scripts.js" %}"></script>
 
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <!-- Owl Carousel의 javascript CDN -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
       {% block script %}{% endblock script %}
     </body>
 

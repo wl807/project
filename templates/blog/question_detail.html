@@ -37,6 +37,12 @@
                 <section class="mb-5">
                   <p>{{question.content}}</p>
                 </section>
+                <div class="d-flex justify-content-end mb-2">
+                  <div class="text-muted">
+                    <a href="{% url "blog:question_modify" question.id %}" class="text-muted small text-decoration-none text-reset border p-1 rounded-2">수정</a>
+                    <a href="{% url "blog:question_delete" question.id %}" class="text-muted small text-decoration-none text-reset border p-1 rounded-2">삭제</a>
+                  </div>
+                </div>
               </article>
 
               <!-- Answer section-->
@@ -56,7 +62,7 @@
                     </form>
                     <!-- 답변 등록 끝-->
 
-                    <!-- comment 영역 -->
+                    <!-- Answer 영역 -->
                     {% for answer in question.answer_set.all %}
                       <div class="d-flex mb-4">
                         <!-- Parent comment-->
@@ -69,16 +75,18 @@
                           {{answer.content}}
                           <div class="d-flex justify-content-between">
                             <div class="text-muted">
-                              <a href="" class="text-muted small text-decoration-none text-reset dropdown-toggle more-answer-comment">답변의 댓글</a>
+                              <a href="" class="text-muted small text-decoration-none text-reset dropdown-toggle more-answer-comment">답변의 댓글({{answer.comment_set.count}})</a>
                             </div>
                             <div class="text-muted">
-                              <a href="" class="text-muted small text-decoration-none text-reset">수정</a>
-                              <a href="" class="text-muted small text-decoration-none text-reset">삭제</a>
+                              <a href="{% url "blog:answer_modify" answer.id %}" class="text-muted small text-decoration-none text-reset">수정</a>
+                              <a href="{% url "blog:answer_delete" answer.id %}" class="text-muted small text-decoration-none text-reset">삭제</a>
                             </div>
                           </div>
 
                           <!-- comment 영역 -->
+
                           {% if answer.comment_set.count > 0%}
+
                             {% for comment in answer.comment_set.all%}
                               <div id="" class="comment-section" style="display:none">
                                 <div class="d-flex mt-4">
@@ -90,12 +98,19 @@
                                     {{comment.content}}
                                   </div>
                                 </div>
-
+                                <div class="d-flex justify-content-end">
+                                  <div class="text-muted ">
+                                    <a href="{% url "blog:comment_modify_answer" comment.id %}" class="text-muted small text-decoration-none text-reset">수정
+                                    </a>
+                                    <a href="{% url "blog:comment_delete_answer" comment.id %}" class="text-muted small text-decoration-none text-reset">삭제</a>
+                                  </div>
+                                </div>
                                 <!-- Comment 폼 디자인 -->
                                 <div class="d-flex justify-content-center p-3">
                                   <div class="d-flex flex-grow-1">
-                                    <form action="" method="post" class="mb-4">
-                                      <input type="hidden" name="csrfmiddlewaretoken" value="fF3Ep1KM1ZDuMGL7idBzwMWOeflVNVfwblUvfNR9kALVgEldkfF0yGTxmnH7JDrK"/>
+                                    {% include "errors.html" %}
+                                    <form action="{% url "blog:comment_create_answer" answer.id %}" method="post" class="mb-4">
+                                      {% csrf_token %}
                                       <div class="col-12 flex-grow-1 w-100">
                                         <textarea class="form-control" name="content" rows="2" placeholder="" style="width: 100%"></textarea>
                                       </div>
@@ -109,12 +124,13 @@
                                 <!-- // Comment 폼 디자인 -->
                               </div>
                             {% endfor %}
+                            <!-- comment가 없는 경우 -->
                           {% else %}
                             <div id="" class="comment-section" style="display:none">
                               <div class="d-flex justify-content-center p-3">
                                 <div class="d-flex flex-grow-1">
-                                  <form action="" method="post" class="mb-4">
-                                    <input type="hidden" name="csrfmiddlewaretoken" value="fF3Ep1KM1ZDuMGL7idBzwMWOeflVNVfwblUvfNR9kALVgEldkfF0yGTxmnH7JDrK"/>
+                                  <form action="{% url "blog:comment_create_answer" answer.id %}" method="post" class="mb-4">
+                                    {% csrf_token %}
                                     <div class="col-12 flex-grow-1 w-100">
                                       <textarea class="form-control" name="content" rows="2" placeholder="" style="width: 100%"></textarea>
                                     </div>
@@ -130,6 +146,7 @@
                         </div>
                       </div>
                     {% endfor %}
+                    <!-- 하나의 answer, comments-->
 
                     <!-- comment 영역 종료-->
                   </div>
@@ -138,13 +155,22 @@
                 <!--card 종료-->
 
               </div>
+
+              <div class="d-flex justify-content-end mt-3">
+                <button class="btn btn-light border">
+                  <a href="{% url "blog:qna" %}" class=" text-decoration-none text-reset">글목록</a>
+                </button>
+              </div>
+
             </div>
           </div>
 
           <!-- 댓글 하나 종료료-->
         </section>
+
       </div>
 
+      <!-- accordion 영역 -->
       <div class="col-4">
         <div class="container p-0 py-5">
           <h2 class="fw-bolder mb-3">Website Issues</h2>
@@ -275,7 +301,7 @@
       </div>
 
       <div class="icon-container">
-        아이콘!!!
+        <a class="text-decoration-none text-reset" href="{% url "blog:faq" %}">FAQ</a>
       </div>
 
     </div>

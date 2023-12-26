@@ -23,17 +23,17 @@
     /* float: right; */
     display: block;
     position: fixed;
-    bottom: 50px;
+    bottom: 100px;
     right: 50px;
     border: none;
     border-radius: 16px;
-    background: royalblue;
-    color: white;
+    background: #ffdddd;
+    color: black;
     padding: 12px;
     font-weight: bold;
     box-shadow: 0 5px 15px gray;
     cursor: pointer;
-    width: 100px;
+    width: auto;
   }
 
   .col-8 {

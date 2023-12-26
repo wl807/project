@@ -33,7 +33,7 @@
               <a href="{% url "blog:question_detail" question.id %}" class="text-decoration-none text-reset">{{question.subject}}
                 
             </td>
-            <td>{{question.author}}</td>
+            <td>{{question.author.name}}</td>
             <td>{{question.created_at}}</td>
           </tr>
         {% endfor %}
