@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static humanize %}
 {% block style %}
   <link rel="stylesheet" href="{% static "css/index.css" %}">
 {% endblock style %}
@@ -27,10 +27,10 @@
           </div>
         </div>
       </div>
-      <!-- card container -->
       <div class="col-md-10 col-lg-8 col-xl-7">
         <a href="{% url "blog:item_register" %}" class="btn btn-success">상품 등록</a>
       </div>
+      <!-- card container -->
       <div class="row gx-5">
         <!-- card-->
         {% for item in items %}
@@ -51,7 +51,7 @@
                     <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..."/>
                     <div class="small">
                       <div class="fw-bold">{{item.author.name}}</div>
-                      <div class="text-muted time" >{{item.created_at}}</div>
+                      <div class="text-muted time" >{{item.created_at|naturaltime}}</div>
                     </div>
                   </div>
                 </div>
@@ -60,6 +60,34 @@
           </div>
         {% endfor %}
       </div>
+
+
+<!-- 페이징 처리 paginator.page_range : 페이지 범위 -->
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    {% if items.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="{{items.previous_page_number}}" aria-label="Previous">
+          previous
+        </a>
+      </li>
+    {% endif %}
+    {% for page in items.paginator.page_range %}
+      {% if page >= items.number|add:-5 and page <= items.number|add:5%}
+        <li class="page-item {% if page == items.number %}active{% endif %}">
+          <a class="page-link" href="{{page}}">{{page}}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+    {% if items.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="{{items.next_page_number}}" aria-label="Next">
+          next
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>
 
       <!-- qna 아이콘 넣기!!!!-->
       <!-- qna fixed position-->

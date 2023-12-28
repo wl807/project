@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login,logout
 from .forms import RegisterForm
+from .models import User
 
 # Create your views here.
 def custom_logout(request):
@@ -35,3 +36,19 @@ def register(request):
     else:
         form = RegisterForm()
     return render(request, "accounts/register.html", {"form": form})
+
+
+
+
+
+
+def mypage(request, nickname):
+    profile_user = get_object_or_404(User, nickname=nickname)
+    context = {
+        "user":profile_user
+    }
+    print(profile_user)
+    return render(request, "accounts/my_page.html", context)
+
+
+

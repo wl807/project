@@ -87,8 +87,8 @@
 
                           {% if answer.comment_set.count > 0%}
 
-                            {% for comment in answer.comment_set.all%}
-                              <div id="" class="comment-section" style="display:none">
+                            <div id="" class="comment-section" style="display:none">
+                              {% for comment in answer.comment_set.all %}
                                 <div class="d-flex mt-4">
                                   <div class="flex-shrink-0">
                                     <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." style="filter: invert(0)"/>
@@ -105,25 +105,25 @@
                                     <a href="{% url "blog:comment_delete_answer" comment.id %}" class="text-muted small text-decoration-none text-reset">삭제</a>
                                   </div>
                                 </div>
-                                <!-- Comment 폼 디자인 -->
-                                <div class="d-flex justify-content-center p-3">
-                                  <div class="d-flex flex-grow-1">
-                                    {% include "errors.html" %}
-                                    <form action="{% url "blog:comment_create_answer" answer.id %}" method="post" class="mb-4">
-                                      {% csrf_token %}
-                                      <div class="col-12 flex-grow-1 w-100">
-                                        <textarea class="form-control" name="content" rows="2" placeholder="" style="width: 100%"></textarea>
-                                      </div>
+                              {% endfor %}
+                              <!-- Comment 폼 디자인 -->
+                              <div class="d-flex justify-content-center p-3">
+                                <div class="d-flex flex-grow-1">
+                                  {% include "errors.html" %}
+                                  <form action="{% url "blog:comment_create_answer" answer.id %}" method="post" class="mb-4">
+                                    {% csrf_token %}
+                                    <div class="col-12 flex-grow-1 w-100">
+                                      <textarea class="form-control" name="content" rows="2" placeholder="" style="width: 100%"></textarea>
+                                    </div>
 
-                                      <button type="submit" class="btn border align-items-center d-flex p-2">
-                                        <span>확인</span>
-                                      </button>
-                                    </form>
-                                  </div>
+                                    <button type="submit" class="btn border align-items-center d-flex p-2">
+                                      <span>확인</span>
+                                    </button>
+                                  </form>
                                 </div>
-                                <!-- // Comment 폼 디자인 -->
                               </div>
-                            {% endfor %}
+                              <!-- // Comment 폼 디자인 -->
+                            </div>
                             <!-- comment가 없는 경우 -->
                           {% else %}
                             <div id="" class="comment-section" style="display:none">

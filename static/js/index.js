@@ -35,6 +35,16 @@ $(document).ready(function () {
   });
 });
 
+// pagination
+document.querySelector(".pagination").addEventListener("click", (e) => {
+  e.preventDefault(); // a 태그 기능 중지
+
+  console.log(e.target.href); // http://127.0.0.1:8000/board/10
+  console.log(e.target.getAttribute("href")); // 10
+
+  location.href = `/blog/?page=${e.target.getAttribute("href")}`;
+});
+
 // 작성일자 표시 ~일 전전
 function getTimeDifference(timestamp) {
   const currentTime = new Date();
@@ -58,14 +68,14 @@ function getTimeDifference(timestamp) {
   }
 }
 const timezone = document.querySelectorAll(".time");
-timezone.forEach((time) => {
-  const timestampText = time.textContent;
-  const timestamp = timestampText.replace(/년|월|일|오후/g, "").trim();
-  //   console.log(timestamp);
+// timezone.forEach((time) => {
+//   const timestampText = time.textContent;
+//   const timestamp = timestampText.replace(/년|월|일|오후/g, "").trim();
+//   //   console.log(timestamp);
 
-  // "2023-12-24T12:34:56"; // 여기에 원하는 타임스탬프를 입력하세요.
-  const timeDifferenceText = getTimeDifference(timestamp);
-  //   console.log(timeDifferenceText);
+//   // "2023-12-24T12:34:56"; // 여기에 원하는 타임스탬프를 입력하세요.
+//   const timeDifferenceText = getTimeDifference(timestamp);
+//   //   console.log(timeDifferenceText);
 
-  time.innerHTML = timeDifferenceText;
-});
+//   time.innerHTML = timeDifferenceText;
+// });

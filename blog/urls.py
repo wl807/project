@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 
 app_name = 'blog'
@@ -56,6 +56,21 @@ urlpatterns = [
     path("comment/modify/answer/<int:cid>/", views.comment_modify_answer, name="comment_modify_answer"),
     # http://127.0.0.1:8000/blog/comment/delete/answer/aid/
     path("comment/delete/answer/<int:cid>/", views.comment_delete_answer, name="comment_delete_answer"),
+
+
+
+
+
+    # Cart Zone
+    #  [\w.@+-]+ : \w == 0-9A-Za-z_ ,   . == 모든문자랑 매치 ,  @+- ,  + : 1~무한대
+    #  ^ : 시작, $ : 종료
+    # http://127.0.0.1:8000/blog/유저이름/cart/
+    re_path(r"^(?P<nickname>[\w.@+-]+)/cart/", views.cart, name="cart"), # re_path 하기
+
+
+   
+
+
 
 
 ]

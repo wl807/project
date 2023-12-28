@@ -1,14 +1,67 @@
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
-from .models import Item, Question, Answer, Comment
+from .models import Item, Question, Answer, Comment, Cart
 from .forms import ItemForm, QuestionForm, AnswerForm, CommentForm
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 
+from django.core.paginator import Paginator
+from accounts.models import User
+
+
+# Cart
+def cart(request, nickname):
+    user = get_object_or_404(User, nickname=nickname )
+    context = {"user": user}
+    return render(request, "blog/cart_page.html", context)
+
+
+
+
+
+
+# @login_required
+# def item_add(request, pk):
+#     # 게시물 가져오기
+#     item = get_object_or_404(Item, id=pk)
+
+#     is_liked = post.likes.filter(id=request.user.id).exists()
+
+#     if not is_liked:
+#         post.likes.add(request.user)
+#         is_liked = True
+#     else:
+#         post.likes.remove(request.user)
+#         is_liked = False
+
+#     return JsonResponse({"likes": post.likes.count(), "is_liked": is_liked}, status=200)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def index(request):
     items= Item.objects.all()
+    page = request.GET.get("page",1)
+    paginator = Paginator(items, 9)
+    page_obj = paginator.get_page(page)
     context = {
-        "items" : items
+        "items" : page_obj
     }
 
     return render(request, 'blog/index.html', context)
@@ -259,6 +312,8 @@ def comment_delete_answer(request, cid):
     comment = get_object_or_404(Comment, id=cid)
     comment.delete()
     return redirect("blog:question_detail" ,comment.answer.question.id)
+
+
 
 
 

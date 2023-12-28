@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from django.contrib.auth import views as auth_views
 from . import views
 # from .views import register
@@ -17,4 +17,11 @@ urlpatterns = [
     path("logout/", views.custom_logout, name="logout"),
         # http://127.0.0.1:8000/accounts/join/
     path("join/", views.register, name="join"),
+
+
+     # My Page
+    # http://127.0.0.1:8000/accounts/유저이름/mypage/
+    # path("mypage/", views.mypage, name="mypage"),
+
+    re_path(r"^(?P<nickname>[\w.@+-]+)/mypage/", views.mypage, name="mypage"), # re_path 하기
 ]

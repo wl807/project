@@ -1,10 +1,11 @@
 from django.db import models
 from accounts.models import User
 
+
 class Item(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="image")  # /media/image/
+    title = models.CharField(max_length=255)    
+    image = models.ImageField(upload_to="image/item/")  # /media/image/
     content = models.TextField()
     price = models.IntegerField()
 
@@ -17,6 +18,19 @@ class Item(models.Model):
     def __str__(self) -> str:
         return self.title
     
+
+
+class Cart(models.Model):
+    user = models.OneToOneField(User, on_delete = models.CASCADE)
+    item = models.ForeignKey(Item, on_delete = models.CASCADE)
+    added = models.BooleanField(default=False) # 장바구니에 추가 여부
+    added_at = models.DateTimeField(auto_now_add = True)
+
+
+
+
+
+
 
 # Question 모델
 # id, subject(제목), content(내용), created_at(질문 작성일시), modified_at(질문 수정일시-직접입력(값이 없을 수도 있음))
