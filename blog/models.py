@@ -32,7 +32,7 @@ class CartItem(models.Model): # cart와 item의 중개 모델
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
-    added_at = models.DateTimeField(auto_now_add = True)
+    added_at = models.DateTimeField(auto_now_add = True, null=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     # class Meta:
