@@ -5,7 +5,7 @@ $(document).ready(function () {
     items: 2, // 한번에 보여지는 이미지 수
     loop: true, // 항목들을 무한으로 반복하여 보여줄지 여부
     autoplay: true, // 자동으로 슬라이드 쇼를 시작할지 여부
-    autoplayTimeout: 3000, // 다음 이미지로 넘어가는 시간 (단위 : 밀리초)
+    autoplayTimeout: 5000, // 다음 이미지로 넘어가는 시간 (단위 : 밀리초)
     autoplayHoverPause: true,
     responsive: {
       0: {
@@ -15,7 +15,7 @@ $(document).ready(function () {
         items: 3,
       },
       1300: {
-        items: 5,
+        items: 3,
       },
     },
     nav: true,

@@ -6,8 +6,7 @@ span {
 a {
   color: black;
 }
-
-img {
+.cart img {
   display: block;
   width: 80%;
   height: 80px;
@@ -17,7 +16,7 @@ img {
 .cart {
   width: 100%;
   margin: auto;
-  padding: 30px;
+  /* padding: 10px; */
 }
 
 .cart ul {
@@ -38,7 +37,7 @@ table {
   border-top: solid 1.5px black;
   border-collapse: collapse;
   width: 100%;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 thead {
@@ -47,7 +46,7 @@ thead {
 }
 
 tbody {
-  font-size: 12px;
+  font-size: 15px;
 }
 
 td {
@@ -73,10 +72,10 @@ td {
   padding: 20px;
 }
 
-.cart__list__option p {
+/* .cart__list__option > p {
   margin-bottom: 25px;
   position: relative;
-}
+} */
 
 /* .cart__list__option p::after {
   content: "";
@@ -90,7 +89,7 @@ td {
 
 .cart__list__optionbtn {
   background-color: white;
-  font-size: 10px;
+  font-size: 14px;
   border: lightgrey solid 1px;
   padding: 7px;
 }
@@ -145,4 +144,9 @@ td {
   background-color: limegreen;
   color: white;
   border: none;
+}
+
+.pointer-events-none {
+  pointer-events: none;
+  width: 100%;
 }

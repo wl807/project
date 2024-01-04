@@ -2,7 +2,10 @@
 {% comment %} {% load static board_filter %} {% endcomment %}
 {% block content %}
   <div class="container my-3">
-    <h2>Question List</h2>
+    <div class="d-flex justify-content-between">
+      <h2>질문 게시판</h2>
+      <a class="btn btn-light border" href="{% url "blog:faq" %}"> <i class="fa-regular fa-circle-question"></i> 자주 묻는 질문</a>
+    </div>
     <div class="row my-3">
       <div class="input-group">
         <input type="text" name="keyword" id="" class="form-control">

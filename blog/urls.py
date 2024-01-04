@@ -67,6 +67,11 @@ urlpatterns = [
     # http://127.0.0.1:8000/blog/유저이름/cart/
     re_path(r"^(?P<nickname>[\w.@+-]+)/cart/", views.cart, name="cart"), # re_path 하기
 
+    # http://127.0.0.1:8000/blog/cart/add/item_id
+    path("cart/add/<int:item_id>/", views.add_to_cart, name="add_to_cart"),  # 장바구니에 추가 기능하기
+
+    # http://127.0.0.1:8000/blog/cart/modify/item_id
+    # path("cart/modify/<int:item_id>/", views.update_quantity, name="update_quantity"),  # 장바구니에 수량 변경
 
    
 

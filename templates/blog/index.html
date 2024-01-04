@@ -6,7 +6,7 @@
 
 {% block header %}
   <!-- Header-->
-  <header class="bg-dark py-5">
+  <header class="bg-dark py-5" >
 
     <!-- carousel-->
     {% include "blog/carousel.html" %}
@@ -27,8 +27,8 @@
           </div>
         </div>
       </div>
-      <div class="col-md-10 col-lg-8 col-xl-7">
-        <a href="{% url "blog:item_register" %}" class="btn btn-success">상품 등록</a>
+      <div class="d-flex justify-content-end mb-3">
+        <a href="{% url "blog:item_register" %}" class="btn btn-dark">상품 등록</a>
       </div>
       <!-- card container -->
       <div class="row gx-5">
@@ -68,7 +68,7 @@
     {% if items.has_previous %}
       <li class="page-item">
         <a class="page-link" href="{{items.previous_page_number}}" aria-label="Previous">
-          previous
+          <i class="fa-solid fa-chevron-left"></i>
         </a>
       </li>
     {% endif %}
@@ -82,7 +82,7 @@
     {% if items.has_next %}
       <li class="page-item">
         <a class="page-link" href="{{items.next_page_number}}" aria-label="Next">
-          next
+          <i class="fa-solid fa-chevron-right"></i>
         </a>
       </li>
     {% endif %}
@@ -94,18 +94,18 @@
       <a href="{% url "blog:qna" %}" id="Fixed"><img src="{% static "img/peach_qna.png" %}" alt="" id="Fixed_img"></a>
 
       <!-- Call to action-->
-      <aside class=" bg-gradient rounded-3 p-4 p-sm-5 mt-5" style="background-color:#FFDDDD">
+      <aside class=" bg-gradient rounded-3 p-4 p-sm-5 mt-5" style="background-color:#ffdddd">
         <div class="d-flex align-items-center justify-content-between flex-column flex-xl-row text-center text-xl-start">
           <div class="mb-4 mb-xl-0">
-            <div class="fs-3 fw-bold ">지금 바로 여러분의 물건을 사고 팔아보세요!</div>
-            <div class="text-white-50">회원가입 페이지로 이동</div>
+            <div class="fs-3 fw-bold ">아직 <span class="letter">Peach Market</span> 회원이 아니신가요?</div>
+            <div class="">회원가입 여부 확인 -> </div>
           </div>
           <div class="ms-xl-4">
             <div class="input-group mb-2">
               <input class="form-control" type="text" placeholder="Email address..." aria-label="Email address..." aria-describedby="button-newsletter"/>
-              <button class="btn btn-outline-light" id="button-newsletter" type="button">Sign up</button>
+              <button class="btn btn-light" id="button-newsletter" type="button">Search</button>
             </div>
-            <div class="small text-white-50">We care about privacy, and will never share your data.</div>
+            <div class="small text-muted">We care about privacy, and will never share your data.</div>
           </div>
         </div>
       </aside>

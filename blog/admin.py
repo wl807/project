@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Item, Question, Answer, Comment, Cart
+from .models import Item, Question, Answer, Comment, Cart,CartItem
 from accounts.models import Profile
 
 
@@ -7,11 +7,31 @@ from accounts.models import Profile
 class ItemAdmin(admin.ModelAdmin):
     list_display = ["id", "title", "image"]
     list_display_links = ["title"]
+
+
+
+
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
-    list_display = ["id", "user", "item", "added_at"]
-    list_display_links = ["item"]
+    list_display = ("id", "user")
+    # def display_items(self, obj):
+    #     return ", ".join([str(item) for item in obj.item.all()])
+    # display_items.short_description = 'Items'
     
+    list_display_links = ["user"]
+    
+
+@admin.register(CartItem)
+class CartItemAdmin(admin.ModelAdmin):
+    list_display = ("id", "cart", "item", "added_at")
+    def display_items(self, obj):
+        return ", ".join([str(item) for item in obj.item.all()])
+    display_items.short_description = 'Items'
+    
+    list_display_links = ["cart"]
+
+
+
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ["id", "subject", "author"]

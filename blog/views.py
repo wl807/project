@@ -3,37 +3,78 @@ from .models import Item, Question, Answer, Comment, Cart
 from .forms import ItemForm, QuestionForm, AnswerForm, CommentForm
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from django.core.paginator import Paginator
 from accounts.models import User
+from blog.models import Item, Cart, CartItem
+
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 
 
-# Cart
+# Cart 추가한 것만 보여주기
 def cart(request, nickname):
-    user = get_object_or_404(User, nickname=nickname )
+    user = get_object_or_404(User, nickname=nickname ) # cart의 소유주 = user
+    # item = get_object_or_404(Item, id=user.) # ??????
+    
+
     context = {"user": user}
     return render(request, "blog/cart_page.html", context)
 
 
 
 
+def add_to_cart(request, item_id): # item id가 다르게 들어와야 함
+    item = get_object_or_404(Item, id=item_id)
+    user = request.user
+
+    # 수량 가져오기
+    quantity = int(request.POST.get("quantity"))
+    # 사용자의 cart 가져오기
+    cart = get_object_or_404(Cart,user=user)
+
+    # 사용자의 장바구니에 해당 아이템이 이미 있는지 확인
+    # 만약 이미 장바구니에 있는 아이템이면 수량을 증가시킴
 
 
-# @login_required
-# def item_add(request, pk):
-#     # 게시물 가져오기
-#     item = get_object_or_404(Item, id=pk)
+    try:
+        cart_item = CartItem.objects.get(cart=cart, item=item)
+        cart_item.quantity += quantity
+        cart_item.save()
 
-#     is_liked = post.likes.filter(id=request.user.id).exists()
+    except CartItem.DoesNotExist:
+        cart_item = CartItem.objects.create(
+            item = item,
+            quantity = quantity,
+            cart = cart
+        )
+        cart_item.save()
 
-#     if not is_liked:
-#         post.likes.add(request.user)
-#         is_liked = True
-#     else:
-#         post.likes.remove(request.user)
-#         is_liked = False
+    messages.success(request, f"{item.title}이(가) 장바구니에 추가되었습니다.")
 
-#     return JsonResponse({"likes": post.likes.count(), "is_liked": is_liked}, status=200)
+    # cart_item, created = CartItem.objects.get_or_create(cart=cart,item=item,quantity=quantity)
+    
+    # if not created:
+    #     cart_item.quantity += quantity
+    #     cart_item.save()
+
+    # # 여기에서는 간단하게 메시지를 추가하여 장바구니에 성공적으로 추가되었음을 알려줄 수 있습니다.
+    # messages.success(request, f"{item.title}이(가) 장바구니에 추가되었습니다.")
+
+    return redirect('blog:cart', user.nickname)  # 장바구니 페이지로 리다이렉트
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -58,7 +99,7 @@ def cart(request, nickname):
 def index(request):
     items= Item.objects.all()
     page = request.GET.get("page",1)
-    paginator = Paginator(items, 9)
+    paginator = Paginator(items, 3)
     page_obj = paginator.get_page(page)
     context = {
         "items" : page_obj

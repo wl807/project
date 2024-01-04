@@ -4,11 +4,11 @@
 }
 
 .owl-item img {
-  max-height: 80%;
+  /* max-height: 80%; */
   height: 400px;
   width: auto;
   /* 가로 길이를 자동으로 조절 */
-  max-width: 80%;
+  max-width: 85%;
   /* 최대 가로 길이를 설정 */
   margin: 0 auto;
   /* 가운데 정렬을 위한 마진 설정 */
@@ -53,6 +53,11 @@
   }
 } */
 
+.owl-carousel {
+  width: 60%;
+  margin: 0 auto;
+}
+
 .owl-prev {
   width: 15px;
   height: 100px;
@@ -76,4 +81,31 @@
 .owl-next i {
   transform: scale(1, 6);
   color: #ccc;
+}
+
+/* pagination custom */
+.page-link {
+  color: #000;
+  background-color: #fff;
+  border: 1px solid white;
+}
+
+.page-item.active .page-link {
+  z-index: 1;
+  color: #fff;
+  font-weight: bold;
+  background-color: #4ebc8d;
+  border-color: white;
+}
+
+.page-link:focus,
+.page-link:hover {
+  color: #000;
+  background-color: #fafafa;
+  border-color: white;
+}
+
+span.letter {
+  font-family: "Lora", serif;
+  font-size: 30px;
 }

@@ -20,16 +20,16 @@
 
     <!-- google font-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin">
-    <link href="https://fonts.googleapis.com/css2?family=Grandiflora+One&family=Lumanosimo&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital@1&display=swap" rel="stylesheet">
 
     <!-- owl carousel -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     <style>
       #mylogo {
-        font-family: 'Grandiflora One', cursive;
-        font-family: 'Lumanosimo', cursive;
+        font-family: 'Lora', serif;
+        font-size: 30px;
       }
     </style>
     {% block style %}{% endblock style %}
@@ -40,53 +40,58 @@
 
       <!-- Navigation-->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-        <div class="container px-5">
-          <a class="navbar-brand" href="{% url "blog:index" %}" style="font-size:30px " id='mylogo'>Peach Market</a>
+        <div class="container px-4 d-flex">
+          {% comment %} <a class="navbar-brand" href="{% url "blog:index" %}" style="font-size:30px " id='mylogo'>Peach Market</a> {% endcomment %}
+          <a class="navbar-brand"  href="{% url "blog:index" %}"  id='mylogo'>
+            <img src="{% static "img/brand_logo.png" %}" alt="" width="70" height="70" >
+            Peach Market
+          </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span></button>
 
           <!-- input group-->
-          <div class="container">
-            <div class="row">
-              <div class="col-12">
-                <div class="input-group input-group-sm mt-2 mb-2">
-                  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                  <span class="input-group-text" id="inputGroup-sizing-sm">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                  </span>
+
+
+
+                <div class="input-group input-group-sm p-2 w-100 " >
+                  <form class="d-flex w-100">
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">    
+                    <button type="submit" class="input-group-text" id="">
+                      <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                  </form>
                 </div>
-              </div>
-              {% comment %} <div class="col-6"></div> {% endcomment %}
 
-            </div>
 
-          </div>
+  
+
+     
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ">
 
               {% if not user.is_authenticated %}
-                <li class="nav-item">
+                <li class="nav-item p-0">
                   <a class="nav-link" href="{% url "accounts:login" %}">Login</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item p-0">
                   <a class="nav-link" href="{% url "accounts:join" %}">SignUp</a>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url "blog:cart" user.nickname %}">
-                    {% comment %} <i class="fa-regular fa-cart-shopping" style="color: #6c757d;"></i>
-                    <i class="fa-regular fa-bag-shopping"></i> {% endcomment %}
-                    {% comment %} <img src="{% static "img/cart-shopping-solid.svg" %}" alt=""> Cart {% endcomment %}
+                  <a class="nav-link" href="{% url "blog:cart" user.nickname %}" style="font-size:21px;" >
                     <i class="fa-solid fa-cart-shopping"></i>
                   </a>
                 </li>
-           
+                <li class="nav-item p-0">
+                  <a class="nav-link" style="font-size:21px;" href="{% url "blog:item_register" %}"><i class="fa-solid fa-boxes-packing"></i></a>
+                </li>
+                
               
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size:20px;">
                   <i class="fa-regular fa-user"></i> <span class="small">{{request.user.name}} 님</span></a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+                <ul class="dropdown-menu dropdown-menu-end" style="padding:0;" aria-labelledby="navbarDropdownBlog">
                   <li>
                     <a class="dropdown-item" href="{% url "accounts:mypage" user.nickname%}">
                       <i class="fa-regular fa-user"></i> MyPage</a> <!-- 비밀번호 변경 추가-->

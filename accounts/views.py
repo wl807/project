@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login,logout
 from .forms import RegisterForm
 from .models import User
+from blog.models import Cart
 
 # Create your views here.
 def custom_logout(request):
@@ -18,6 +19,10 @@ def register(request):
             # form.save(commit=False) : form에 save() 일어남
             user = form.save(commit=False)
             user.save()  # 모델에 추가
+
+
+            Cart.objects.create(user=user)
+
 
             # 회원가입 완료 후
             # 1) 로그인 페이지로 이동 => 사용자가 직접 로그인하기

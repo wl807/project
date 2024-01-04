@@ -1,9 +1,8 @@
-from django.template.defaulttags import register
+from django import template
 
-from blog.models import Comment
+register = template.Library()
 
 
-
-@register.filter()
-def ranges(count= 11 ):
-    return range(1, count)
+@register.filter
+def multiply(value, arg):
+    return value * arg

@@ -1,6 +1,6 @@
 from django.db import models
 from accounts.models import User
-
+from django.db.models import UniqueConstraint
 
 class Item(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -8,7 +8,6 @@ class Item(models.Model):
     image = models.ImageField(upload_to="image/item/")  # /media/image/
     content = models.TextField()
     price = models.IntegerField()
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -22,9 +21,23 @@ class Item(models.Model):
 
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
-    item = models.ForeignKey(Item, on_delete = models.CASCADE)
-    added = models.BooleanField(default=False) # 장바구니에 추가 여부
+    # item = models.ManyToManyField(Item, through='CartItem') 
+    
+    def __str__(self):
+        return f"{self.user.name}"
+
+
+
+class CartItem(models.Model): # cart와 item의 중개 모델
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
     added_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    # class Meta:
+    #     unique_together = ('cart', 'item')
+    
 
 
 

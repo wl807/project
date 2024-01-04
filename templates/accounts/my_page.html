@@ -21,16 +21,16 @@
 
     <!-- google font-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin">
-    <link href="https://fonts.googleapis.com/css2?family=Grandiflora+One&family=Lumanosimo&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital@1&display=swap" rel="stylesheet">
 
     <!-- owl carousel -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     <style>
       .mylogo {
-        font-family: 'Grandiflora One', cursive;
-        font-family: 'Lumanosimo', cursive;
+        font-family: 'Lora', serif;
+        font-size: 35px;
       }
       img.rounded-circle{
         box-shadow: 0 5px 15px gray;
@@ -61,7 +61,7 @@
         <!-- Top navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom" >
           <div class="container-fluid">
-            <button class="btn btn-primary" id="sidebarToggle"><i class="fa-solid fa-bars"></i> 메뉴</button>
+            <button class="btn btn-dark " id="sidebarToggle"><i class="fa-solid fa-bars"></i> 메뉴</button>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span></button>
 
@@ -104,13 +104,13 @@
               <div class="profileHeader fs-1 mb-3">
               My Page
               </div>  
-              <div class="profileContent">
+              <div class="profileContent mb-3">
                 <img class="rounded-circle mx-auto d-block " src="{{user.profile.avatar.url}}" style="width:180px; height:180px;" alt="..."/>
                 <p class="fw-bold fs-1 mb-0 mt-1 text-center">{{user.nickname}}</p> <!-- 실명 -->
                 <p class="text-muted mb-0 text-center">{{user}}</p>
               </div>
               
-              <hr>
+              
               
               <div class="buying d-flex mb-5">
                 <div class="rounded-3  p-4 border text-center flex-fill">
@@ -135,7 +135,7 @@
               </div>
               <hr>
               <div class="left-footer">
-                <ul class="d-flex justify-content-around" >
+                <ul class="d-flex justify-content-around list-unstyled" >
                   <li>로그아웃</li>
                   <li>고객센터</li>
                 </ul>
@@ -165,7 +165,7 @@
                     여성
                     {% elif user_gender == 'M' %}
                     남성
-                    {% elif user_gender == 'M' %}
+                    {% elif user_gender == 'N' %}
                     밝히지 않음
                     {% endif %}
                     

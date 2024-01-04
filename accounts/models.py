@@ -8,6 +8,7 @@ from django.core.validators import RegexValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
 # 회원 앱 필요하다면?
 # 장고 User 사용 - django.contrib.auth.models.User
 # 직접 작성 - 1. 장고 User 상속 받으면서 새로 작성
@@ -93,4 +94,7 @@ class Profile(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
+        
+        
+
     
